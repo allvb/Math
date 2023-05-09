@@ -7,7 +7,7 @@ test('testing class Magician', () => {
   const examplObject = {
     attack: 100,
     defence: 100,
-    stoned: false,
+    // stoned: false,
     type: 'magician',
   };
 
@@ -30,7 +30,7 @@ test('testing class Daemon', () => {
   const examplObject = {
     attack: 100,
     defence: 100,
-    stoned: false,
+    // stoned: false,
     type: 'daemon',
   };
 
