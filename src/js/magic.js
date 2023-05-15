@@ -1,27 +1,40 @@
 export default class Magic {
   constructor() {
-    this.attack = 100;
+    // ESLint выдаёт ошибку при использовании нижнего подчёркивания
+    // поэтому добавил эту стоку ниже
+
+    /* eslint no-underscore-dangle: 0 */
+    this._attack = 100;
     this.defence = 100;
-    // this.stoned = false;
+    this._stoned = false;
+    this._attackOfDistanse = 100;
   }
 
-  getStoned() {
-    return this.stoned;
+  get getStoned() {
+    return this._stoned;
   }
 
-  setStoned() {
-    this.stoned = true;
-  }
-
-  setAttack(distanse) {
-    let attack = this.attack - (this.attack * 0.1 * (distanse - 1));
-    if (this.getStoned()) {
-      attack -= Math.log2(distanse) * 5;
+  set stoned(parametr) {
+    if (typeof parametr === 'boolean') {
+      if (parametr) {
+        this._stoned = true;
+      } else {
+        this._stoned = false;
+      }
+    } else {
+      throw new Error('Параметр в stoned должен быть boolean');
     }
-    return Math.round(attack);
   }
 
-  getAttack(distanse) {
-    return this.setAttack(distanse);
+  set attack(distanse) {
+    this._attackOfDistanse = this._attack - (this._attack * 0.1 * (distanse - 1));
+    if (this.getStoned) {
+      this._attackOfDistanse -= Math.log2(distanse) * 5;
+      this._attackOfDistanse = Math.round(this._attackOfDistanse);
+    }
+  }
+
+  get getAttack() {
+    return this._attackOfDistanse;
   }
 }
