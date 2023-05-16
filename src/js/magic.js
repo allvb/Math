@@ -7,7 +7,6 @@ export default class Magic {
     this._attack = 100;
     this.defence = 100;
     this._stoned = false;
-    this._attackOfDistanse = 100;
   }
 
   get getStoned() {
@@ -26,15 +25,18 @@ export default class Magic {
     }
   }
 
-  set attack(distanse) {
-    this._attackOfDistanse = this._attack - (this._attack * 0.1 * (distanse - 1));
-    if (this.getStoned) {
-      this._attackOfDistanse -= Math.log2(distanse) * 5;
-      this._attackOfDistanse = Math.round(this._attackOfDistanse);
+  set attack(param) {
+    if (param < 1 || param > 100) {
+      throw new Error('Передаваемое значение атаки должно быть полложительным и меньше 100');
     }
+    this._attack = param;
   }
 
-  get getAttack() {
-    return this._attackOfDistanse;
+  getAttack(distanse) {
+    let attack = this._attack - (this._attack * 0.1 * (distanse - 1));
+    if (this.getStoned) {
+      attack -= Math.log2(distanse) * 5;
+    }
+    return Math.round(attack);
   }
 }
